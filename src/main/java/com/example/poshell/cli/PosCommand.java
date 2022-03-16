@@ -2,13 +2,11 @@ package com.example.poshell.cli;
 
 import com.example.poshell.biz.PosService;
 import com.example.poshell.model.Cart;
-import com.example.poshell.model.Item;
 import com.example.poshell.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 
-import java.util.List;
 
 @ShellComponent
 public class PosCommand {
@@ -48,6 +46,24 @@ public class PosCommand {
         Cart cart = posService.getCart();
         if(cart==null)
             return "ERROR";
-        return posService.getCart().toString();
+        return cart.toString();
+    }
+
+    @ShellMethod(value = "Empty Cart", key = "e")
+    public String emptyCart() {
+        Cart cart = posService.getCart();
+        if(cart==null)
+            return "ERROR";
+        cart.getItems().clear();
+        return cart.toString();
+    }
+
+    @ShellMethod(value = "Remove Cart Item", key = "r")
+    public String modifyCart(int idx) {
+        Cart cart = posService.getCart();
+        if(cart==null||cart.getItems().size()<idx-1)
+            return "ERROR";
+        cart.getItems().remove(idx);
+        return "Success";
     }
 }
