@@ -46,3 +46,14 @@ Please use asciinema (https://asciinema.org) to record a demo and submit the url
 
 And please elaborate your understanding in layered systems via this homework in your README.md.
 
+# 三层架构
+每一层具有不同的职责
+根据下层的api，来为上一层提供api
+使得上下层之间是一直松耦合的关系
+可以在api不变的条件下,换一种某层的实现方法
+比如在这个项目内,使用数据库只是简单的通过集合的方式实现的
+但是可以根据`PosDB`接口，直接换一种实现类
+便可完成数据库层面的改变
+由于是基于构件开发，注入时只要对该接口注入另一个实现类即可
+分层保障的是该层自己就是一个独立的构件
+依赖下层的api为上层提供服务
